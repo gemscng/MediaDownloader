@@ -25,14 +25,29 @@ function updatePlatformIcon(url) {
   const icon = document.getElementById('platformIcon');
   const input = document.getElementById('url');
   const platform = detectPlatform(url);
+  // Remove all platform classes
+  input.className = input.className.replace(/platform-\w+/g, '').trim();
   if (platform) {
     icon.innerHTML = platform.svg;
     icon.classList.add('visible');
     input.classList.add('has-platform');
+    input.classList.add('platform-' + platform.name);
+    document.documentElement.style.setProperty('--platform-accent', platform.color);
   } else {
     icon.classList.remove('visible');
     input.classList.remove('has-platform');
+    document.documentElement.style.removeProperty('--platform-accent');
   }
+}
+
+// --- Thumbnail Download ---
+let currentThumbnailUrl = '';
+function downloadThumbnail() {
+  if (!currentThumbnailUrl) return;
+  const a = document.createElement('a');
+  a.href = '/api/thumbnail?url=' + encodeURIComponent(currentThumbnailUrl);
+  a.download = 'thumbnail.jpg';
+  a.click();
 }
 
 // --- Paste from Clipboard ---
@@ -190,6 +205,11 @@ async function fetchInfo(videoUrl) {
       thumbImg.src = data.thumbnail;
       thumbImg.alt = data.title || 'Video thumbnail';
       thumbImg.style.display = 'block';
+      currentThumbnailUrl = data.thumbnail;
+      document.getElementById('thumbDlBtn').style.display = 'inline-block';
+    } else {
+      document.getElementById('thumbDlBtn').style.display = 'none';
+      currentThumbnailUrl = '';
     }
     thumb.classList.remove('skeleton');
 
@@ -281,6 +301,8 @@ async function startDownload() {
         progressBar.style.width = '0%';
       } else if (d.filename) {
         status.textContent += '\n✅ Done!';
+        btn.classList.add('complete');
+        setTimeout(() => btn.classList.remove('complete'), 2000);
         if (mode === 'direct') {
           const enc = encodeURIComponent(d.filename).replace(/#/g, '%23');
           const a = document.createElement('a');

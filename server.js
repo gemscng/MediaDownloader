@@ -53,6 +53,9 @@ ${urls.map(u => `  <url>
   res.type('application/xml').send(xml);
 });
 
+// Health check
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 // Routes
 app.use(require('./src/routes/download'));
 app.use(require('./src/routes/files'));
