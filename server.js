@@ -74,23 +74,31 @@ function buildArgs(videoUrl, quality, outputPath, audioFormat, trim) {
     args.push('-x', '--audio-format', 'mp3', '--audio-quality', '0');
     if (trim) {
       // Parse start time to seconds
-      const startParts = (trim.start || '0:00').split(':').map(Number);
-      const startSec = startParts.length === 2 ? startParts[0] * 60 + startParts[1] : startParts[0] || 0;
-      const dur = trim.duration || 15;
-      if (trim.fitTo15 && dur > 15) {
-        // Speed up audio to fit into 15s using atempo filter
-        // atempo supports 0.5-100.0, chain if needed
-        const speed = dur / 15;
-        let atempoChain = '';
-        let remaining = speed;
-        while (remaining > 2.0) {
-          atempoChain += 'atempo=2.0,';
-          remaining /= 2.0;
+      const parseTime = (t) => { const p = (t || '0:00').split(':').map(Number); return p.length === 3 ? p[0]*3600+p[1]*60+p[2] : p.length === 2 ? p[0]*60+p[1] : p[0]||0; };
+      const startSec = parseTime(trim.start);
+      if (trim.mode === 'free' && trim.end) {
+        // Free trim: start to end
+        const endSec = parseTime(trim.end);
+        const dur = endSec - startSec;
+        if (dur > 0) {
+          args.push('--postprocessor-args', 'ffmpeg:-ss ' + startSec + ' -t ' + dur);
         }
-        atempoChain += 'atempo=' + remaining.toFixed(4);
-        args.push('--postprocessor-args', 'ffmpeg:-ss ' + startSec + ' -t ' + dur + ' -af ' + atempoChain + ' -t 15');
       } else {
-        args.push('--postprocessor-args', 'ffmpeg:-ss ' + startSec + ' -t ' + dur);
+        const dur = trim.duration || 15;
+        if (trim.fitTo15 && dur > 15) {
+          // Speed up audio to fit into 15s using atempo filter
+          const speed = dur / 15;
+          let atempoChain = '';
+          let remaining = speed;
+          while (remaining > 2.0) {
+            atempoChain += 'atempo=2.0,';
+            remaining /= 2.0;
+          }
+          atempoChain += 'atempo=' + remaining.toFixed(4);
+          args.push('--postprocessor-args', 'ffmpeg:-ss ' + startSec + ' -t ' + dur + ' -af ' + atempoChain + ' -t 15');
+        } else {
+          args.push('--postprocessor-args', 'ffmpeg:-ss ' + startSec + ' -t ' + dur);
+        }
       }
     }
   } else {
@@ -200,18 +208,21 @@ input[type="file"]{display:none}
     <option value="best">Best</option>
     <option value="bestaudio[ext=m4a]">Audio only (m4a)</option>
     <option value="bestaudio/best" data-audio="mp3">Audio only (mp3)</option>
+    <option value="bestaudio/best" data-audio="mp3" data-trim="free">✂️ MP3 Trim (custom range)</option>
     <option value="bestaudio/best" data-audio="mp3" data-trim="15">🎵 MP3 Ringtone (15s trim)</option>
   </select>
   <div id="trimPanel" style="display:none;margin-top:8px;padding:10px;background:#222;border-radius:8px">
     <div style="font-size:11px;color:#888;margin-bottom:6px">✂️ Trim settings:</div>
-    <div style="display:flex;gap:8px;align-items:center">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <label style="font-size:13px;color:#aaa">Start:</label>
       <input type="text" id="trimStart" value="0:00" placeholder="0:00" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <label style="font-size:13px;color:#aaa">Duration:</label>
+      <label style="font-size:13px;color:#aaa" id="trimEndLabel" style="display:none">End:</label>
+      <input type="text" id="trimEnd" placeholder="1:30" style="width:70px;padding:6px;font-size:13px;text-align:center;display:none">
+      <label style="font-size:13px;color:#aaa" id="trimDurLabel">Duration:</label>
       <input type="text" id="trimDuration" value="15" placeholder="15" style="width:50px;padding:6px;font-size:13px;text-align:center">
-      <span style="font-size:13px;color:#666">seconds</span>
+      <span id="trimDurUnit" style="font-size:13px;color:#666">seconds</span>
     </div>
-    <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+    <div id="fitPanel" style="margin-top:8px;display:flex;align-items:center;gap:8px">
       <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:#aaa">
         <input type="checkbox" id="fitTo15" style="accent-color:#ff4444"> Fit to 15s (speed up if longer)
       </label>
@@ -351,8 +362,29 @@ document.getElementById('quality').addEventListener('change', function() {
   const opt = this.options[this.selectedIndex];
   const trim = opt.dataset.trim;
   const panel = document.getElementById('trimPanel');
+  const trimEnd = document.getElementById('trimEnd');
+  const trimEndLabel = document.getElementById('trimEndLabel');
+  const trimDurLabel = document.getElementById('trimDurLabel');
+  const trimDuration = document.getElementById('trimDuration');
+  const trimDurUnit = document.getElementById('trimDurUnit');
+  const fitPanel = document.getElementById('fitPanel');
   panel.style.display = trim ? 'block' : 'none';
-  if (trim) document.getElementById('trimDuration').value = trim;
+  if (trim === 'free') {
+    trimEnd.style.display = '';
+    trimEndLabel.style.display = '';
+    trimDurLabel.style.display = 'none';
+    trimDuration.style.display = 'none';
+    trimDurUnit.style.display = 'none';
+    fitPanel.style.display = 'none';
+  } else if (trim) {
+    trimEnd.style.display = 'none';
+    trimEndLabel.style.display = 'none';
+    trimDurLabel.style.display = '';
+    trimDuration.style.display = '';
+    trimDurUnit.style.display = '';
+    fitPanel.style.display = 'flex';
+    trimDuration.value = trim;
+  }
 });
 
 let infoTimeout = null;
@@ -420,7 +452,7 @@ async function startDownload() {
   const res = await fetch('/download', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, quality, mode, filename: document.getElementById('filename').value.trim() || null, audioFormat: document.querySelector('#quality option:checked').dataset.audio || null, trim: document.querySelector('#quality option:checked').dataset.trim ? { start: document.getElementById('trimStart').value, duration: parseInt(document.getElementById('trimDuration').value) || 15, fitTo15: document.getElementById('fitTo15').checked } : null })
+    body: JSON.stringify({ url, quality, mode, filename: document.getElementById('filename').value.trim() || null, audioFormat: document.querySelector('#quality option:checked').dataset.audio || null, trim: document.querySelector('#quality option:checked').dataset.trim ? { start: document.getElementById('trimStart').value, end: document.getElementById('trimEnd').value || null, duration: parseInt(document.getElementById('trimDuration').value) || 15, fitTo15: document.getElementById('fitTo15').checked, mode: document.querySelector('#quality option:checked').dataset.trim } : null })
   });
   const { jobId } = await res.json();
   
