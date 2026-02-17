@@ -1,0 +1,15 @@
+{
+  "name": "media-downloader",
+  "version": "2.0.0",
+  "description": "Free video downloader - YouTube, Facebook, Instagram, TikTok, Threads & more",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "dotenv": "^16.4.5",
+    "multer": "^1.4.5-lts.1"
+  }
+}
