@@ -308,6 +308,18 @@ function toggleTools() {
   toggle.setAttribute('aria-expanded', isOpen);
 }
 
+function switchTab(tab, btn) {
+  document.querySelectorAll('.toolbox-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  document.querySelectorAll('.toolbox-panel').forEach(p => p.style.display = 'none');
+  const panel = document.getElementById(tab === 'download' ? 'tabDownload' : 'tabTools');
+  if (panel) panel.style.display = 'block';
+}
+
 function setUploadMode(val, el) {
   document.querySelectorAll('.upload-mode-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');

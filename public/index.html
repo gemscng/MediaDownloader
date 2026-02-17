@@ -61,8 +61,13 @@
 <div class="layout">
 <div class="main">
 
-<!-- Main Download Card -->
-<div class="card fade-in fade-in-delay-1" role="main" aria-label="Video downloader">
+<!-- Main Card with Tabs -->
+<div class="card fade-in fade-in-delay-1 toolbox-card" role="main" aria-label="Video downloader">
+  <div class="toolbox-tabs" role="tablist">
+    <button class="toolbox-tab active" role="tab" aria-selected="true" aria-controls="tabDownload" onclick="switchTab('download', this)" data-i18n="tab_download">⬇️ Download</button>
+    <button class="toolbox-tab" role="tab" aria-selected="false" aria-controls="tabTools" onclick="switchTab('tools', this)" data-i18n="tab_tools">🛠️ Video Tools</button>
+  </div>
+  <div class="toolbox-panel" id="tabDownload" role="tabpanel">
   <!-- URL Input -->
   <div class="url-input-wrapper">
     <div class="platform-detect-icon" id="platformIcon" aria-hidden="true"></div>
@@ -152,15 +157,9 @@
 
   <!-- Status -->
   <div class="status" id="status" role="log" aria-live="polite"></div>
-</div>
+  </div><!-- /tabDownload -->
 
-<!-- Video Tools Card -->
-<div class="card fade-in fade-in-delay-2">
-  <button class="tools-toggle" id="toolsToggle" onclick="toggleTools()" aria-expanded="false" aria-controls="toolsContent">
-    <h3 data-i18n="tools_title">🛠️ Video Tools</h3>
-    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-  </button>
-  <div class="tools-content" id="toolsContent">
+  <div class="toolbox-panel" id="tabTools" role="tabpanel" style="display:none">
     <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px" data-i18n="tools_desc">Upload a video file to extract audio or remove audio</p>
 
     <!-- Upload Area -->
