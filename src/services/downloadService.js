@@ -66,13 +66,15 @@ function buildArgs(videoUrl, quality, outputPath, audioFormat, trim) {
   return args;
 }
 
-function startDownload(job, videoUrl, quality, outputPath, audioFormat, trim) {
+function startDownload(job, videoUrl, quality, outputPath, audioFormat, trim, onComplete) {
   const args = buildArgs(videoUrl, quality, outputPath, audioFormat, trim);
   const proc = spawn('yt-dlp', args);
+  job._proc = proc;
   proc.stdout.on('data', d => { job.log += d.toString(); });
   proc.stderr.on('data', d => { job.log += d.toString(); });
   proc.on('close', code => {
     job.done = true;
+    job.status = 'done';
     if (code !== 0) {
       job.error = 'yt-dlp exited with code ' + code;
     } else {
@@ -81,6 +83,7 @@ function startDownload(job, videoUrl, quality, outputPath, audioFormat, trim) {
       })).sort((a, b) => b.mtime - a.mtime);
       if (files.length > 0) job.filename = files[0].name;
     }
+    if (typeof onComplete === 'function') onComplete();
   });
 }
 

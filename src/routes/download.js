@@ -4,6 +4,7 @@ const path = require('path');
 const { DOWNLOAD_DIR } = require('../config');
 const downloadService = require('../services/downloadService');
 const jobManager = require('../services/jobManager');
+const queue = require('../services/queue');
 
 const router = express.Router();
 
@@ -16,7 +17,27 @@ router.post('/download', (req, res, next) => {
       ? path.join(DOWNLOAD_DIR, safeName + '.%(ext)s')
       : path.join(DOWNLOAD_DIR, '%(title).80s.%(ext)s');
     const job = jobManager.create(jobId, mode || 'save');
-    downloadService.startDownload(job, videoUrl, quality, outputPath, audioFormat, trim);
+
+    const startFn = () => {
+      job.status = 'downloading';
+      downloadService.startDownload(job, videoUrl, quality, outputPath, audioFormat, trim, () => {
+        queue.jobFinished(jobId);
+      });
+    };
+
+    const result = queue.enqueue(jobId, startFn);
+
+    if (result.rejected) {
+      return res.status(503).json({ error: 'Server queue is full. Please try again later.' });
+    }
+
+    if (result.queued) {
+      job.status = 'queued';
+      job.position = result.position;
+    } else {
+      job.status = 'downloading';
+    }
+
     res.json({ jobId });
   } catch (err) { next(err); }
 });
@@ -32,11 +53,31 @@ router.post('/info', async (req, res, next) => {
 });
 
 router.get('/status/:jobId', (req, res) => {
-  const job = jobManager.get(req.params.jobId);
+  const jobId = req.params.jobId;
+  const job = jobManager.get(jobId);
+
+  // Record poll to keep queue spot alive
+  queue.recordPoll(jobId);
+
+  // Update queue position dynamically
+  const position = queue.getPosition(jobId);
+  if (position != null) {
+    job.status = 'queued';
+    job.position = position;
+    job.estimatedWaitMs = queue.estimateWait(position);
+  } else if (!job.done && queue.isActive(jobId)) {
+    job.status = 'downloading';
+    delete job.position;
+  }
+
   res.json(job);
 });
 
-// Thumbnail proxy — fetch video thumbnail by job's info URL
+router.get('/api/queue/status', (req, res) => {
+  res.json(queue.status());
+});
+
+// Thumbnail proxy
 router.get('/api/thumbnail', async (req, res) => {
   const { url: thumbUrl } = req.query;
   if (!thumbUrl) return res.status(400).json({ error: 'Missing url parameter' });

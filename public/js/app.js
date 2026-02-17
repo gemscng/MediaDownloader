@@ -269,12 +269,40 @@ async function startDownload() {
       } : null
     })
   });
-  const { jobId } = await res.json();
+  const data = await res.json();
+  if (data.error) {
+    status.textContent = '❌ ' + data.error;
+    btn.disabled = false;
+    return;
+  }
+  const { jobId } = data;
 
   let progress = 0;
+  let wasQueued = false;
   const poll = setInterval(async () => {
     const r = await fetch('/status/' + jobId);
     const d = await r.json();
+
+    // Handle queued state
+    if (d.status === 'queued') {
+      wasQueued = true;
+      const waitSec = Math.round((d.estimatedWaitMs || 0) / 1000);
+      const waitMin = waitSec >= 60 ? Math.round(waitSec / 60) + ' min' : waitSec + 's';
+      status.innerHTML = '<div class="queue-waiting" data-i18n="queue_position">' +
+        '⏳ You\'re <span class="queue-position-num">#' + d.position + '</span> in queue' +
+        ' — <span data-i18n="queue_eta">Estimated wait: ~' + waitMin + '</span></div>';
+      progressBar.style.width = '0%';
+      btnText.textContent = '⏳ #' + d.position;
+      return;
+    }
+
+    // Transition from queued to downloading
+    if (wasQueued && d.status === 'downloading') {
+      wasQueued = false;
+      status.innerHTML = '';
+      status.textContent = 'Starting download...\n';
+    }
+
     status.textContent = d.log || 'Working...';
     status.scrollTop = status.scrollHeight;
 
@@ -317,8 +345,9 @@ async function startDownload() {
         loadDownloads();
       }
       setTimeout(() => { progressBar.style.width = '0%'; }, 2000);
+      updateQueueIndicator();
     }
-  }, 1000);
+  }, 2000);
 }
 
 // --- Video Tools ---
@@ -469,6 +498,33 @@ async function uploadCookies(input) {
   alert(data.message);
   location.reload();
 }
+
+// --- Queue Status Indicator ---
+async function updateQueueIndicator() {
+  try {
+    const res = await fetch('/api/queue/status');
+    const data = await res.json();
+    let el = document.getElementById('queueIndicator');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'queueIndicator';
+      el.className = 'queue-indicator';
+      document.querySelector('.container')?.prepend(el);
+    }
+    if (data.concurrent === 0 && data.queueLength === 0) {
+      el.innerHTML = '<span data-i18n="queue_idle">🟢 Server idle</span>';
+      el.className = 'queue-indicator idle';
+    } else if (data.queueLength === 0) {
+      el.innerHTML = '<span data-i18n="queue_active">🟡 ' + data.concurrent + '/' + data.maxConcurrent + ' active</span>';
+      el.className = 'queue-indicator active';
+    } else {
+      el.innerHTML = '<span data-i18n="queue_busy">🔴 Queue: ' + data.queueLength + ' waiting</span>';
+      el.className = 'queue-indicator busy';
+    }
+  } catch(e) {}
+}
+setInterval(updateQueueIndicator, 5000);
+updateQueueIndicator();
 
 // --- Init ---
 loadDownloads();
