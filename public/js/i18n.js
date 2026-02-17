@@ -1,4 +1,4 @@
-// i18n.js — Internationalization for MediaDownloader
+// i18n.js — Internationalization for MediaDownloader (Redesigned)
 (function() {
   const LANGUAGES = [
     { code: 'en', flag: '🇬🇧', name: 'English' },
@@ -66,39 +66,73 @@
   }
 
   function applyDirection(lang) {
-    if (RTL_LANGS.includes(lang)) {
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = lang;
-    } else {
-      document.documentElement.dir = 'ltr';
-      document.documentElement.lang = lang;
-    }
+    document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
   }
 
   function buildSelector() {
     const container = document.getElementById('lang-selector');
     if (!container) return;
-    const select = document.createElement('select');
-    select.id = 'lang-select';
-    select.style.cssText = 'background:#222;color:#ccc;border:1px solid #444;border-radius:6px;padding:4px 8px;font-size:13px;cursor:pointer;outline:none;';
+
+    const currentLang = detectLanguage();
+    const langObj = LANGUAGES.find(l => l.code === currentLang) || LANGUAGES[0];
+
+    // Button
+    const btn = document.createElement('button');
+    btn.className = 'lang-btn';
+    btn.setAttribute('aria-label', 'Change language');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span class="globe-icon">🌐</span><span class="flag">' + langObj.flag + '</span>';
+
+    // Dropdown
+    const dropdown = document.createElement('div');
+    dropdown.className = 'lang-dropdown';
+    dropdown.setAttribute('role', 'listbox');
+
     LANGUAGES.forEach(l => {
-      const opt = document.createElement('option');
-      opt.value = l.code;
-      opt.textContent = l.flag + ' ' + l.name;
-      select.appendChild(opt);
+      const option = document.createElement('button');
+      option.className = 'lang-option' + (l.code === currentLang ? ' active' : '');
+      option.setAttribute('role', 'option');
+      option.setAttribute('aria-selected', l.code === currentLang);
+      option.innerHTML = '<span>' + l.flag + '</span> ' + l.name;
+      option.addEventListener('click', async () => {
+        localStorage.setItem('i18n-lang', l.code);
+        applyDirection(l.code);
+        const t = await loadTranslations(l.code);
+        applyTranslations(t);
+        // Update button
+        btn.querySelector('.flag').textContent = l.flag;
+        // Update active state
+        dropdown.querySelectorAll('.lang-option').forEach(o => {
+          o.classList.remove('active');
+          o.setAttribute('aria-selected', 'false');
+        });
+        option.classList.add('active');
+        option.setAttribute('aria-selected', 'true');
+        dropdown.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      dropdown.appendChild(option);
     });
-    select.value = detectLanguage();
-    select.addEventListener('change', async function() {
-      const lang = this.value;
-      localStorage.setItem('i18n-lang', lang);
-      applyDirection(lang);
-      const t = await loadTranslations(lang);
-      applyTranslations(t);
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
     });
-    container.appendChild(select);
+
+    // Close on outside click
+    document.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    dropdown.addEventListener('click', e => e.stopPropagation());
+
+    container.appendChild(btn);
+    container.appendChild(dropdown);
   }
 
-  // Expose for dynamic use in app.js
+  // Expose for dynamic use
   window.i18n = {
     t: function(key) { return currentTranslations[key] || key; },
     lang: detectLanguage

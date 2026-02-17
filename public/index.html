@@ -12,26 +12,96 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Free Video Downloader - HD 1080p MP4">
 <meta name="twitter:description" content="Download videos from YouTube, Facebook, Instagram, TikTok, Threads & more. Free and fast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Free Video Downloader","description":"Download videos from YouTube, Facebook, Instagram, Threads, TikTok, Twitter/X in HD 1080p MP4","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-<header style="text-align:center">
-<div id="lang-selector" style="position:absolute;top:10px;right:14px;z-index:10"></div>
-<h1 data-i18n="page_title">🎬 Free Video Downloader</h1>
-<p style="color:#888;font-size:13px;margin-bottom:10px" data-i18n="page_subtitle">Download HD videos from <strong>YouTube</strong> · <strong>Facebook</strong> · <strong>Instagram</strong> · <strong>Threads</strong> · <strong>TikTok</strong> · <strong>Twitter/X</strong> · and 1000+ sites</p>
+
+<a class="skip-link" href="#url">Skip to main content</a>
+
+<!-- Language Selector -->
+<div class="lang-wrapper" id="lang-selector" role="navigation" aria-label="Language selector"></div>
+
+<div class="app-container">
+
+<!-- Hero -->
+<header class="hero" role="banner">
+  <h1 class="hero-title" data-i18n="page_title">Media Downloader</h1>
+  <p class="hero-subtitle" data-i18n="page_subtitle">Download HD videos from YouTube · Facebook · Instagram · Threads · TikTok · Twitter/X · and 1000+ sites</p>
+  <div class="platforms" aria-label="Supported platforms">
+    <div class="platform-icon" title="YouTube">
+      <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      <span class="platform-label">YouTube</span>
+    </div>
+    <div class="platform-icon" title="Instagram">
+      <svg viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#feda75"/><stop offset="25%" stop-color="#fa7e1e"/><stop offset="50%" stop-color="#d62976"/><stop offset="75%" stop-color="#962fbf"/><stop offset="100%" stop-color="#4f5bd5"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      <span class="platform-label">Instagram</span>
+    </div>
+    <div class="platform-icon" title="TikTok">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.21 8.21 0 0 0 4.76 1.52V6.69h-1z"/></svg>
+      <span class="platform-label">TikTok</span>
+    </div>
+    <div class="platform-icon" title="Facebook">
+      <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      <span class="platform-label">Facebook</span>
+    </div>
+    <div class="platform-icon" title="Twitter / X">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span class="platform-label">X / Twitter</span>
+    </div>
+    <div class="platform-icon" title="Threads">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.773.767c-1.028-3.702-3.594-5.56-7.562-5.56-2.614.018-4.633.885-5.996 2.577-1.323 1.643-2.01 4.013-2.04 7.04.033 3.036.72 5.407 2.04 7.046 1.364 1.694 3.382 2.558 5.996 2.577.656-.004 2.55-.098 4.314-1.182 1.263-.775 2.27-1.994 2.991-3.622l2.639 1.098c-.87 1.96-2.15 3.51-3.81 4.61-2.16 1.44-4.67 1.59-6.12 1.584zM16.95 13.512c-.159-3.578-2.124-5.635-5.39-5.646a5.19 5.19 0 0 0-2.37.538l1.093 2.19a3.07 3.07 0 0 1 1.252-.267c1.725 0 2.587 1.07 2.636 3.273a4.36 4.36 0 0 0-.484-.026c-3.2 0-5.21 1.69-5.21 4.38 0 2.47 1.72 4.12 4.28 4.12 1.86 0 3.22-.83 3.95-2.4.61.14 1.07-.45 1.37-1.63.32-1.27.44-2.81.44-4.53h-1.56zm-3.45 6.142c-1.14 0-1.88-.74-1.88-1.88 0-1.36.98-2.22 2.55-2.22.43 0 .83.05 1.19.14-.18 2.47-1 3.96-1.86 3.96z"/></svg>
+      <span class="platform-label">Threads</span>
+    </div>
+  </div>
 </header>
+
 <div class="layout">
 <div class="main">
 
-<div class="card">
-  <input type="text" id="url" data-i18n="url_placeholder" data-i18n-attr="placeholder" placeholder="Paste video URL (YouTube, FB, IG, Threads, TikTok...)" autofocus oninput="onUrlInput(this.value)">
-  <div id="videoInfo" style="display:none;margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:4px" data-i18n="video_info_label">📹 Video title (editable):</div>
-    <input type="text" id="filename" data-i18n="filename_placeholder" data-i18n-attr="placeholder" placeholder="Video filename..." style="font-size:14px;padding:8px;border-color:#444">
-    <div id="videoMeta" style="font-size:11px;color:#666;margin-top:4px"></div>
+<!-- Main Download Card -->
+<div class="card fade-in fade-in-delay-1" role="main" aria-label="Video downloader">
+  <!-- URL Input -->
+  <div class="url-input-wrapper">
+    <div class="platform-detect-icon" id="platformIcon" aria-hidden="true"></div>
+    <input type="text" id="url" data-i18n="url_placeholder" data-i18n-attr="placeholder" placeholder="Paste video URL here..." autofocus aria-label="Video URL input" oninput="onUrlInput(this.value)">
+    <button class="paste-btn" onclick="pasteFromClipboard()" aria-label="Paste from clipboard" title="Paste">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span data-i18n="paste_btn">Paste</span>
+    </button>
   </div>
-  <select id="quality">
+
+  <!-- Video Info -->
+  <div class="video-info" id="videoInfo" aria-live="polite">
+    <div class="video-info-content">
+      <div class="video-thumbnail" id="videoThumb">
+        <img id="videoThumbImg" src="" alt="" style="display:none">
+      </div>
+      <div class="video-details">
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px" data-i18n="video_info_label">📹 Video title (editable):</div>
+        <input type="text" id="filename" class="video-title-input" data-i18n="filename_placeholder" data-i18n-attr="placeholder" placeholder="Video filename..." aria-label="Video filename">
+        <div class="video-meta" id="videoMeta"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quality Pills -->
+  <div class="quality-selector">
+    <div class="quality-label" data-i18n="quality_label">Quality</div>
+    <div class="quality-pills" role="radiogroup" aria-label="Video quality">
+      <button class="quality-pill" data-value="best[height<=480]" role="radio" aria-checked="false" data-i18n="q_480p">480p</button>
+      <button class="quality-pill" data-value="best[height<=720]" role="radio" aria-checked="false" data-i18n="q_720p">720p</button>
+      <button class="quality-pill active" data-value="best[height<=1080]" role="radio" aria-checked="true" data-i18n="q_1080p">1080p</button>
+      <button class="quality-pill" data-value="best" role="radio" aria-checked="false" data-i18n="q_best">Best</button>
+      <button class="quality-pill" data-value="bestaudio/best" data-audio="mp3" role="radio" aria-checked="false" data-i18n="q_audio_mp3"><span class="pill-icon">🎵</span> MP3</button>
+      <button class="quality-pill" data-value="bestaudio/best" data-audio="mp3" data-trim="free" role="radio" aria-checked="false" data-i18n="q_mp3_trim"><span class="pill-icon">✂️</span> Trim</button>
+    </div>
+  </div>
+
+  <!-- Hidden select for backward compat -->
+  <select id="quality" aria-hidden="true">
     <option value="best[height<=480]" data-i18n="q_480p">480p</option>
     <option value="best[height<=720]" data-i18n="q_720p">720p</option>
     <option value="best[height<=1080]" selected data-i18n="q_1080p">1080p</option>
@@ -41,83 +111,145 @@
     <option value="bestaudio/best" data-audio="mp3" data-trim="free" data-i18n="q_mp3_trim">✂️ MP3 Trim (custom range)</option>
     <option value="bestaudio/best" data-audio="mp3" data-trim="15" data-i18n="q_mp3_ringtone">🎵 MP3 Ringtone (15s trim)</option>
   </select>
-  <div id="trimPanel" style="display:none;margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:6px" data-i18n="trim_settings">✂️ Trim settings:</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <label style="font-size:13px;color:#aaa" data-i18n="trim_start">Start:</label>
-      <input type="text" id="trimStart" value="0:00" placeholder="0:00" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <label style="font-size:13px;color:#aaa" id="trimEndLabel" style="display:none" data-i18n="trim_end">End:</label>
-      <input type="text" id="trimEnd" placeholder="1:30" style="width:70px;padding:6px;font-size:13px;text-align:center;display:none">
-      <label style="font-size:13px;color:#aaa" id="trimDurLabel" data-i18n="trim_duration">Duration:</label>
-      <input type="text" id="trimDuration" value="15" placeholder="15" style="width:50px;padding:6px;font-size:13px;text-align:center">
-      <span id="trimDurUnit" style="font-size:13px;color:#666" data-i18n="trim_seconds">seconds</span>
+
+  <!-- Trim Panel -->
+  <div class="trim-panel" id="trimPanel">
+    <div class="trim-panel-title" data-i18n="trim_settings">✂️ Trim settings</div>
+    <div class="trim-row">
+      <label data-i18n="trim_start">Start:</label>
+      <input type="text" id="trimStart" value="0:00" placeholder="0:00" class="trim-input" aria-label="Trim start time">
+      <label id="trimEndLabel" style="display:none" data-i18n="trim_end">End:</label>
+      <input type="text" id="trimEnd" placeholder="1:30" class="trim-input" style="display:none" aria-label="Trim end time">
+      <label id="trimDurLabel" data-i18n="trim_duration">Duration:</label>
+      <input type="text" id="trimDuration" value="15" placeholder="15" class="trim-input" style="width:55px" aria-label="Trim duration">
+      <span id="trimDurUnit" style="font-size:12px;color:var(--text-dim)" data-i18n="trim_seconds">seconds</span>
     </div>
-    <div id="fitPanel" style="margin-top:8px;display:flex;align-items:center;gap:8px">
-      <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:#aaa">
-        <input type="checkbox" id="fitTo15" style="accent-color:#ff4444"> <span data-i18n="trim_fit15">Fit to 15s (speed up if longer)</span>
+    <div class="fit-row" id="fitPanel">
+      <label>
+        <input type="checkbox" id="fitTo15"> <span data-i18n="trim_fit15">Fit to 15s (speed up if longer)</span>
       </label>
-      <span id="speedLabel" style="font-size:11px;color:#ff4444;display:none">→ 1.0x</span>
+      <span id="speedLabel">→ 1.0x</span>
     </div>
   </div>
-  <div class="mode-toggle">
-    <div class="mode-btn active" data-mode="direct" onclick="setMode('direct')"><span data-i18n="mode_direct">⚡ Direct Download</span><br><span style="font-size:11px;font-weight:400" data-i18n="mode_direct_desc">Stream to you, no server storage</span></div>
-    <div class="mode-btn" data-mode="save" onclick="setMode('save')"><span data-i18n="mode_save">💾 Save on Server</span><br><span style="font-size:11px;font-weight:400" data-i18n="mode_save_desc">Keep file (auto-deletes in 1h)</span></div>
+
+  <!-- Mode Toggle -->
+  <div class="mode-toggle" role="radiogroup" aria-label="Download mode">
+    <button class="mode-btn active" data-mode="direct" onclick="setMode('direct')" role="radio" aria-checked="true">
+      <span class="mode-label" data-i18n="mode_direct">⚡ Direct Download</span>
+      <span class="mode-desc" data-i18n="mode_direct_desc">Stream to you, no server storage</span>
+    </button>
+    <button class="mode-btn" data-mode="save" onclick="setMode('save')" role="radio" aria-checked="false">
+      <span class="mode-label" data-i18n="mode_save">💾 Save on Server</span>
+      <span class="mode-desc" data-i18n="mode_save_desc">Keep file (auto-deletes in 1h)</span>
+    </button>
   </div>
-  <button class="btn" onclick="startDownload()" data-i18n="btn_download">⬇️ Download</button>
-  <div class="status" id="status"></div>
+
+  <!-- Download Button -->
+  <button class="download-btn" id="downloadBtn" onclick="startDownload()" aria-label="Download video">
+    <div class="progress-bar" id="progressBar"></div>
+    <span class="btn-text" id="downloadBtnText" data-i18n="btn_download">⬇️ Download</span>
+  </button>
+
+  <!-- Status -->
+  <div class="status" id="status" role="log" aria-live="polite"></div>
 </div>
 
-<div class="card">
-  <h3 style="margin-bottom:8px" data-i18n="tools_title">🛠️ Video Tools</h3>
-  <p style="font-size:12px;color:#888;margin-bottom:12px" data-i18n="tools_desc">Upload a video file to extract audio or remove audio</p>
-  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-    <label class="upload" style="margin:0"><span data-i18n="tools_choose">📁 Choose Video</span><input type="file" id="uploadFile" accept="video/*,.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.m4v,.3gp" onchange="showUploadName(this)"></label>
-    <span id="uploadName" style="font-size:13px;color:#888;word-break:break-all"></span>
-  </div>
-  <select id="uploadMode" style="margin-top:8px" onchange="toggleUploadTrim()">
-    <option value="extract-mp3" data-i18n="tools_extract_mp3">🎵 Extract MP3 (audio only)</option>
-    <option value="remove-audio" data-i18n="tools_remove_audio">🔇 Remove Audio (silent video)</option>
-  </select>
-  <div id="uploadTrimPanel" style="margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:6px" data-i18n="tools_trim_label">✂️ Trim (optional):</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <label style="font-size:13px;color:#aaa" data-i18n="trim_start">Start:</label>
-      <input type="text" id="upTrimStart" value="0:00" placeholder="0:00" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <label style="font-size:13px;color:#aaa" data-i18n="trim_end">End:</label>
-      <input type="text" id="upTrimEnd" placeholder="(full)" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <span style="font-size:11px;color:#666" data-i18n="tools_trim_end_hint">leave End empty for full length</span>
+<!-- Video Tools Card -->
+<div class="card fade-in fade-in-delay-2">
+  <button class="tools-toggle" id="toolsToggle" onclick="toggleTools()" aria-expanded="false" aria-controls="toolsContent">
+    <h3 data-i18n="tools_title">🛠️ Video Tools</h3>
+    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="tools-content" id="toolsContent">
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px" data-i18n="tools_desc">Upload a video file to extract audio or remove audio</p>
+
+    <!-- Upload Area -->
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('uploadFile').click()" role="button" aria-label="Upload video file" tabindex="0">
+      <span class="upload-icon">📁</span>
+      <span class="upload-text" data-i18n="tools_choose">Drop video here or click to browse</span>
+      <span class="upload-hint">MP4, MOV, AVI, MKV, WebM · Max 500MB</span>
+      <input type="file" id="uploadFile" accept="video/*,.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.m4v,.3gp" onchange="showUploadName(this)">
     </div>
+    <div id="uploadName"></div>
+
+    <!-- Upload Mode Pills -->
+    <div class="upload-mode-pills">
+      <button class="upload-mode-pill active" data-value="extract-mp3" onclick="setUploadMode('extract-mp3', this)" data-i18n="tools_extract_mp3">🎵 Extract MP3</button>
+      <button class="upload-mode-pill" data-value="remove-audio" onclick="setUploadMode('remove-audio', this)" data-i18n="tools_remove_audio">🔇 Remove Audio</button>
+    </div>
+    <select id="uploadMode" style="display:none" aria-hidden="true">
+      <option value="extract-mp3" data-i18n="tools_extract_mp3">🎵 Extract MP3</option>
+      <option value="remove-audio" data-i18n="tools_remove_audio">🔇 Remove Audio</option>
+    </select>
+
+    <!-- Upload Trim -->
+    <div class="upload-trim-panel" id="uploadTrimPanel">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px" data-i18n="tools_trim_label">✂️ Trim (optional):</div>
+      <div class="trim-row">
+        <label style="font-size:13px;color:var(--text-muted)" data-i18n="trim_start">Start:</label>
+        <input type="text" id="upTrimStart" value="0:00" placeholder="0:00" class="trim-input">
+        <label style="font-size:13px;color:var(--text-muted)" data-i18n="trim_end">End:</label>
+        <input type="text" id="upTrimEnd" placeholder="(full)" class="trim-input">
+        <span style="font-size:11px;color:var(--text-dim)" data-i18n="tools_trim_end_hint">leave empty for full length</span>
+      </div>
+    </div>
+
+    <button class="upload-btn" onclick="uploadExtract()" id="uploadBtn" data-i18n="btn_extract_mp3">🎵 Extract MP3</button>
+    <div class="status" id="uploadStatus" role="log" aria-live="polite"></div>
   </div>
-  <button class="btn" onclick="uploadExtract()" style="background:#9c27b0" id="uploadBtn" data-i18n="btn_extract_mp3">🎵 Extract MP3</button>
-  <div class="status" id="uploadStatus"></div>
 </div>
 
-<div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<!-- Downloads Card -->
+<div class="card fade-in fade-in-delay-3">
+  <div class="downloads-header">
     <h3 data-i18n="downloads_title">📦 Downloads</h3>
-    <button class="btn-sm" onclick="clearAll()" style="margin:0" data-i18n="downloads_clear">🗑 Clear All</button>
+    <button class="btn-sm" onclick="clearAll()" data-i18n="downloads_clear">🗑 Clear All</button>
   </div>
   <div class="downloads" id="downloads" data-i18n="downloads_loading">Loading...</div>
 </div>
 
-<section class="card" style="margin-top:16px">
-<details><summary style="cursor:pointer;font-weight:600;color:#ccc" data-i18n="faq_title">❓ FAQ - How to download videos</summary>
-<div style="margin-top:12px;font-size:13px;color:#999;line-height:1.8">
-<p><strong data-i18n="faq_q1">How to download YouTube videos?</strong><br><span data-i18n="faq_a1">Paste the YouTube video URL and click Download. Supports 480p, 720p, 1080p and best quality.</span></p>
-<p><strong data-i18n="faq_q2">How to download Facebook videos?</strong><br><span data-i18n="faq_a2">Copy the Facebook video link from the share button, paste it here and download in MP4 format.</span></p>
-<p><strong data-i18n="faq_q3">How to download Instagram Reels?</strong><br><span data-i18n="faq_a3">Copy the Instagram Reel or post URL, paste it and download. Works with Stories, Reels, and IGTV.</span></p>
-<p><strong data-i18n="faq_q4">How to download Threads videos?</strong><br><span data-i18n="faq_a4">Copy the Threads post URL and paste it here. Videos are downloaded in HD MP4.</span></p>
-<p><strong data-i18n="faq_q5">How to download TikTok videos?</strong><br><span data-i18n="faq_a5">Copy the TikTok video link, paste it here. Downloads without watermark in HD quality.</span></p>
-<p><strong data-i18n="faq_q6">What's the difference between Direct and Save mode?</strong><br><span data-i18n="faq_a6"><strong>Direct:</strong> Video streams straight to your browser — no file stored on server. <strong>Save:</strong> File stays on server for 1 hour so you can re-download or share the link.</span></p>
-<p><strong data-i18n="faq_q7">What format are downloads?</strong><br><span data-i18n="faq_a7">All videos are downloaded as MP4 with H.264 codec — compatible with QuickTime, VLC, and all major players.</span></p>
-<p><strong data-i18n="faq_q8">Is it free?</strong><br><span data-i18n="faq_a8">Yes, 100% free. No watermarks, no sign-up required.</span></p>
+<!-- FAQ -->
+<div class="card faq-section fade-in fade-in-delay-4">
+  <h3 style="font-size:15px;font-weight:600;margin-bottom:8px" data-i18n="faq_title">❓ Frequently Asked Questions</h3>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q1">How to download YouTube videos?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a1">Paste the YouTube video URL and click Download. Supports 480p, 720p, 1080p and best quality.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q2">How to download Facebook videos?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a2">Copy the Facebook video link from the share button, paste it here and download in MP4 format.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q3">How to download Instagram Reels?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a3">Copy the Instagram Reel or post URL, paste it and download. Works with Stories, Reels, and IGTV.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q4">How to download Threads videos?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a4">Copy the Threads post URL and paste it here. Videos are downloaded in HD MP4.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q5">How to download TikTok videos?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a5">Copy the TikTok video link, paste it here. Downloads without watermark in HD quality.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q6">What's the difference between Direct and Save mode?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a6"><strong>Direct:</strong> Video streams straight to your browser — no file stored on server. <strong>Save:</strong> File stays on server for 1 hour so you can re-download or share the link.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q7">What format are downloads?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a7">All videos are downloaded as MP4 with H.264 codec — compatible with QuickTime, VLC, and all major players.</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false"><span data-i18n="faq_q8">Is it free?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer"><p data-i18n="faq_a8">Yes, 100% free. No watermarks, no sign-up required.</p></div>
+  </div>
 </div>
-</details>
-</section>
 
 </div><!-- /main -->
 
-<aside class="sidebar">
+<!-- Affiliate Sidebar -->
+<aside class="sidebar" aria-label="Recommendations">
   <div class="aff-card">
     <div class="aff-badge" data-i18n="aff_recommended">🛡️ RECOMMENDED</div>
     <div class="aff-title" data-i18n="aff_nord_title">NordVPN</div>
@@ -154,16 +286,18 @@
     <div><span class="aff-tag">Music</span><span class="aff-tag">Royalty-Free</span><span class="aff-tag">Creator</span></div>
   </div>
 
-  <div style="text-align:center;font-size:10px;color:#444;margin-top:8px">
+  <div class="aff-footer">
     <p data-i18n="aff_footer">Affiliate links help keep this tool free ❤️</p>
   </div>
 </aside>
+
 </div><!-- /layout -->
 
-<footer style="margin-top:20px;font-size:11px;color:#444;text-align:center;width:100%">
-<p data-i18n="footer_line1">Supports 1000+ video sites powered by yt-dlp · H.264 MP4 · QuickTime compatible</p>
-<p style="margin-top:4px" data-i18n="footer_line2">Temp files auto-delete after 1 hour</p>
+<footer class="app-footer">
+  <p data-i18n="footer_line1">Supports 1000+ video sites powered by yt-dlp · H.264 MP4 · QuickTime compatible</p>
 </footer>
+
+</div><!-- /app-container -->
 
 <script src="/js/i18n.js"></script>
 <script src="/js/app.js"></script>
