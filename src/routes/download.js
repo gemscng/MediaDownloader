@@ -36,4 +36,25 @@ router.get('/status/:jobId', (req, res) => {
   res.json(job);
 });
 
+// Thumbnail proxy — fetch video thumbnail by job's info URL
+router.get('/api/thumbnail', async (req, res) => {
+  const { url: thumbUrl } = req.query;
+  if (!thumbUrl) return res.status(400).json({ error: 'Missing url parameter' });
+  try {
+    const https = require('https');
+    const http = require('http');
+    const mod = thumbUrl.startsWith('https') ? https : http;
+    mod.get(thumbUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (upstream) => {
+      if (upstream.statusCode >= 300 && upstream.statusCode < 400 && upstream.headers.location) {
+        return res.redirect(upstream.headers.location);
+      }
+      res.setHeader('Content-Type', upstream.headers['content-type'] || 'image/jpeg');
+      res.setHeader('Content-Disposition', 'attachment; filename="thumbnail.jpg"');
+      upstream.pipe(res);
+    }).on('error', () => res.status(502).json({ error: 'Failed to fetch thumbnail' }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
