@@ -17,99 +17,100 @@
 <body>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Free Video Downloader","description":"Download videos from YouTube, Facebook, Instagram, Threads, TikTok, Twitter/X in HD 1080p MP4","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <header style="text-align:center">
-<h1>🎬 Free Video Downloader</h1>
-<p style="color:#888;font-size:13px;margin-bottom:10px">Download HD videos from <strong>YouTube</strong> · <strong>Facebook</strong> · <strong>Instagram</strong> · <strong>Threads</strong> · <strong>TikTok</strong> · <strong>Twitter/X</strong> · and 1000+ sites</p>
+<div id="lang-selector" style="position:absolute;top:10px;right:14px;z-index:10"></div>
+<h1 data-i18n="page_title">🎬 Free Video Downloader</h1>
+<p style="color:#888;font-size:13px;margin-bottom:10px" data-i18n="page_subtitle">Download HD videos from <strong>YouTube</strong> · <strong>Facebook</strong> · <strong>Instagram</strong> · <strong>Threads</strong> · <strong>TikTok</strong> · <strong>Twitter/X</strong> · and 1000+ sites</p>
 </header>
 <div class="layout">
 <div class="main">
 
 <div class="card">
-  <input type="text" id="url" placeholder="Paste video URL (YouTube, FB, IG, Threads, TikTok...)" autofocus oninput="onUrlInput(this.value)">
+  <input type="text" id="url" data-i18n="url_placeholder" data-i18n-attr="placeholder" placeholder="Paste video URL (YouTube, FB, IG, Threads, TikTok...)" autofocus oninput="onUrlInput(this.value)">
   <div id="videoInfo" style="display:none;margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:4px">📹 Video title (editable):</div>
-    <input type="text" id="filename" placeholder="Video filename..." style="font-size:14px;padding:8px;border-color:#444">
+    <div style="font-size:11px;color:#888;margin-bottom:4px" data-i18n="video_info_label">📹 Video title (editable):</div>
+    <input type="text" id="filename" data-i18n="filename_placeholder" data-i18n-attr="placeholder" placeholder="Video filename..." style="font-size:14px;padding:8px;border-color:#444">
     <div id="videoMeta" style="font-size:11px;color:#666;margin-top:4px"></div>
   </div>
   <select id="quality">
-    <option value="best[height<=480]">480p</option>
-    <option value="best[height<=720]">720p</option>
-    <option value="best[height<=1080]" selected>1080p</option>
-    <option value="best">Best</option>
-    <option value="bestaudio[ext=m4a]">Audio only (m4a)</option>
-    <option value="bestaudio/best" data-audio="mp3">Audio only (mp3)</option>
-    <option value="bestaudio/best" data-audio="mp3" data-trim="free">✂️ MP3 Trim (custom range)</option>
-    <option value="bestaudio/best" data-audio="mp3" data-trim="15">🎵 MP3 Ringtone (15s trim)</option>
+    <option value="best[height<=480]" data-i18n="q_480p">480p</option>
+    <option value="best[height<=720]" data-i18n="q_720p">720p</option>
+    <option value="best[height<=1080]" selected data-i18n="q_1080p">1080p</option>
+    <option value="best" data-i18n="q_best">Best</option>
+    <option value="bestaudio[ext=m4a]" data-i18n="q_audio_m4a">Audio only (m4a)</option>
+    <option value="bestaudio/best" data-audio="mp3" data-i18n="q_audio_mp3">Audio only (mp3)</option>
+    <option value="bestaudio/best" data-audio="mp3" data-trim="free" data-i18n="q_mp3_trim">✂️ MP3 Trim (custom range)</option>
+    <option value="bestaudio/best" data-audio="mp3" data-trim="15" data-i18n="q_mp3_ringtone">🎵 MP3 Ringtone (15s trim)</option>
   </select>
   <div id="trimPanel" style="display:none;margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:6px">✂️ Trim settings:</div>
+    <div style="font-size:11px;color:#888;margin-bottom:6px" data-i18n="trim_settings">✂️ Trim settings:</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <label style="font-size:13px;color:#aaa">Start:</label>
+      <label style="font-size:13px;color:#aaa" data-i18n="trim_start">Start:</label>
       <input type="text" id="trimStart" value="0:00" placeholder="0:00" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <label style="font-size:13px;color:#aaa" id="trimEndLabel" style="display:none">End:</label>
+      <label style="font-size:13px;color:#aaa" id="trimEndLabel" style="display:none" data-i18n="trim_end">End:</label>
       <input type="text" id="trimEnd" placeholder="1:30" style="width:70px;padding:6px;font-size:13px;text-align:center;display:none">
-      <label style="font-size:13px;color:#aaa" id="trimDurLabel">Duration:</label>
+      <label style="font-size:13px;color:#aaa" id="trimDurLabel" data-i18n="trim_duration">Duration:</label>
       <input type="text" id="trimDuration" value="15" placeholder="15" style="width:50px;padding:6px;font-size:13px;text-align:center">
-      <span id="trimDurUnit" style="font-size:13px;color:#666">seconds</span>
+      <span id="trimDurUnit" style="font-size:13px;color:#666" data-i18n="trim_seconds">seconds</span>
     </div>
     <div id="fitPanel" style="margin-top:8px;display:flex;align-items:center;gap:8px">
       <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:13px;color:#aaa">
-        <input type="checkbox" id="fitTo15" style="accent-color:#ff4444"> Fit to 15s (speed up if longer)
+        <input type="checkbox" id="fitTo15" style="accent-color:#ff4444"> <span data-i18n="trim_fit15">Fit to 15s (speed up if longer)</span>
       </label>
       <span id="speedLabel" style="font-size:11px;color:#ff4444;display:none">→ 1.0x</span>
     </div>
   </div>
   <div class="mode-toggle">
-    <div class="mode-btn active" data-mode="direct" onclick="setMode('direct')">⚡ Direct Download<br><span style="font-size:11px;font-weight:400">Stream to you, no server storage</span></div>
-    <div class="mode-btn" data-mode="save" onclick="setMode('save')">💾 Save on Server<br><span style="font-size:11px;font-weight:400">Keep file (auto-deletes in 1h)</span></div>
+    <div class="mode-btn active" data-mode="direct" onclick="setMode('direct')"><span data-i18n="mode_direct">⚡ Direct Download</span><br><span style="font-size:11px;font-weight:400" data-i18n="mode_direct_desc">Stream to you, no server storage</span></div>
+    <div class="mode-btn" data-mode="save" onclick="setMode('save')"><span data-i18n="mode_save">💾 Save on Server</span><br><span style="font-size:11px;font-weight:400" data-i18n="mode_save_desc">Keep file (auto-deletes in 1h)</span></div>
   </div>
-  <button class="btn" onclick="startDownload()">⬇️ Download</button>
+  <button class="btn" onclick="startDownload()" data-i18n="btn_download">⬇️ Download</button>
   <div class="status" id="status"></div>
 </div>
 
 <div class="card">
-  <h3 style="margin-bottom:8px">🛠️ Video Tools</h3>
-  <p style="font-size:12px;color:#888;margin-bottom:12px">Upload a video file to extract audio or remove audio</p>
+  <h3 style="margin-bottom:8px" data-i18n="tools_title">🛠️ Video Tools</h3>
+  <p style="font-size:12px;color:#888;margin-bottom:12px" data-i18n="tools_desc">Upload a video file to extract audio or remove audio</p>
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-    <label class="upload" style="margin:0">📁 Choose Video<input type="file" id="uploadFile" accept="video/*,.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.m4v,.3gp" onchange="showUploadName(this)"></label>
+    <label class="upload" style="margin:0"><span data-i18n="tools_choose">📁 Choose Video</span><input type="file" id="uploadFile" accept="video/*,.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.m4v,.3gp" onchange="showUploadName(this)"></label>
     <span id="uploadName" style="font-size:13px;color:#888;word-break:break-all"></span>
   </div>
   <select id="uploadMode" style="margin-top:8px" onchange="toggleUploadTrim()">
-    <option value="extract-mp3">🎵 Extract MP3 (audio only)</option>
-    <option value="remove-audio">🔇 Remove Audio (silent video)</option>
+    <option value="extract-mp3" data-i18n="tools_extract_mp3">🎵 Extract MP3 (audio only)</option>
+    <option value="remove-audio" data-i18n="tools_remove_audio">🔇 Remove Audio (silent video)</option>
   </select>
   <div id="uploadTrimPanel" style="margin-top:8px;padding:10px;background:#222;border-radius:8px">
-    <div style="font-size:11px;color:#888;margin-bottom:6px">✂️ Trim (optional):</div>
+    <div style="font-size:11px;color:#888;margin-bottom:6px" data-i18n="tools_trim_label">✂️ Trim (optional):</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <label style="font-size:13px;color:#aaa">Start:</label>
+      <label style="font-size:13px;color:#aaa" data-i18n="trim_start">Start:</label>
       <input type="text" id="upTrimStart" value="0:00" placeholder="0:00" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <label style="font-size:13px;color:#aaa">End:</label>
+      <label style="font-size:13px;color:#aaa" data-i18n="trim_end">End:</label>
       <input type="text" id="upTrimEnd" placeholder="(full)" style="width:70px;padding:6px;font-size:13px;text-align:center">
-      <span style="font-size:11px;color:#666">leave End empty for full length</span>
+      <span style="font-size:11px;color:#666" data-i18n="tools_trim_end_hint">leave End empty for full length</span>
     </div>
   </div>
-  <button class="btn" onclick="uploadExtract()" style="background:#9c27b0" id="uploadBtn">🎵 Extract MP3</button>
+  <button class="btn" onclick="uploadExtract()" style="background:#9c27b0" id="uploadBtn" data-i18n="btn_extract_mp3">🎵 Extract MP3</button>
   <div class="status" id="uploadStatus"></div>
 </div>
 
 <div class="card">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h3>📦 Downloads</h3>
-    <button class="btn-sm" onclick="clearAll()" style="margin:0">🗑 Clear All</button>
+    <h3 data-i18n="downloads_title">📦 Downloads</h3>
+    <button class="btn-sm" onclick="clearAll()" style="margin:0" data-i18n="downloads_clear">🗑 Clear All</button>
   </div>
-  <div class="downloads" id="downloads">Loading...</div>
+  <div class="downloads" id="downloads" data-i18n="downloads_loading">Loading...</div>
 </div>
 
 <section class="card" style="margin-top:16px">
-<details><summary style="cursor:pointer;font-weight:600;color:#ccc">❓ FAQ - How to download videos</summary>
+<details><summary style="cursor:pointer;font-weight:600;color:#ccc" data-i18n="faq_title">❓ FAQ - How to download videos</summary>
 <div style="margin-top:12px;font-size:13px;color:#999;line-height:1.8">
-<p><strong>How to download YouTube videos?</strong><br>Paste the YouTube video URL and click Download. Supports 480p, 720p, 1080p and best quality.</p>
-<p><strong>How to download Facebook videos?</strong><br>Copy the Facebook video link from the share button, paste it here and download in MP4 format.</p>
-<p><strong>How to download Instagram Reels?</strong><br>Copy the Instagram Reel or post URL, paste it and download. Works with Stories, Reels, and IGTV.</p>
-<p><strong>How to download Threads videos?</strong><br>Copy the Threads post URL and paste it here. Videos are downloaded in HD MP4.</p>
-<p><strong>How to download TikTok videos?</strong><br>Copy the TikTok video link, paste it here. Downloads without watermark in HD quality.</p>
-<p><strong>What's the difference between Direct and Save mode?</strong><br><strong>Direct:</strong> Video streams straight to your browser — no file stored on server. <strong>Save:</strong> File stays on server for 1 hour so you can re-download or share the link.</p>
-<p><strong>What format are downloads?</strong><br>All videos are downloaded as MP4 with H.264 codec — compatible with QuickTime, VLC, and all major players.</p>
-<p><strong>Is it free?</strong><br>Yes, 100% free. No ads, no watermarks, no sign-up required.</p>
+<p><strong data-i18n="faq_q1">How to download YouTube videos?</strong><br><span data-i18n="faq_a1">Paste the YouTube video URL and click Download. Supports 480p, 720p, 1080p and best quality.</span></p>
+<p><strong data-i18n="faq_q2">How to download Facebook videos?</strong><br><span data-i18n="faq_a2">Copy the Facebook video link from the share button, paste it here and download in MP4 format.</span></p>
+<p><strong data-i18n="faq_q3">How to download Instagram Reels?</strong><br><span data-i18n="faq_a3">Copy the Instagram Reel or post URL, paste it and download. Works with Stories, Reels, and IGTV.</span></p>
+<p><strong data-i18n="faq_q4">How to download Threads videos?</strong><br><span data-i18n="faq_a4">Copy the Threads post URL and paste it here. Videos are downloaded in HD MP4.</span></p>
+<p><strong data-i18n="faq_q5">How to download TikTok videos?</strong><br><span data-i18n="faq_a5">Copy the TikTok video link, paste it here. Downloads without watermark in HD quality.</span></p>
+<p><strong data-i18n="faq_q6">What's the difference between Direct and Save mode?</strong><br><span data-i18n="faq_a6"><strong>Direct:</strong> Video streams straight to your browser — no file stored on server. <strong>Save:</strong> File stays on server for 1 hour so you can re-download or share the link.</span></p>
+<p><strong data-i18n="faq_q7">What format are downloads?</strong><br><span data-i18n="faq_a7">All videos are downloaded as MP4 with H.264 codec — compatible with QuickTime, VLC, and all major players.</span></p>
+<p><strong data-i18n="faq_q8">Is it free?</strong><br><span data-i18n="faq_a8">Yes, 100% free. No ads, no watermarks, no sign-up required.</span></p>
 </div>
 </details>
 </section>
@@ -118,52 +119,53 @@
 
 <aside class="sidebar">
   <div class="aff-card">
-    <div class="aff-badge">🛡️ RECOMMENDED</div>
-    <div class="aff-title">NordVPN</div>
-    <div class="aff-desc">Protect your privacy while downloading. Hide your IP, unblock geo-restricted content, and stay safe online.</div>
-    <a class="aff-btn" style="background:#4687ff;color:#fff" href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=AFFILIATE_ID&url_id=902" target="_blank" rel="nofollow sponsored noopener">🔒 Get 73% Off NordVPN</a>
-    <div class="aff-deal">💰 30-day money-back guarantee</div>
+    <div class="aff-badge" data-i18n="aff_recommended">🛡️ RECOMMENDED</div>
+    <div class="aff-title" data-i18n="aff_nord_title">NordVPN</div>
+    <div class="aff-desc" data-i18n="aff_nord_desc">Protect your privacy while downloading. Hide your IP, unblock geo-restricted content, and stay safe online.</div>
+    <a class="aff-btn" style="background:#4687ff;color:#fff" href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=AFFILIATE_ID&url_id=902" target="_blank" rel="nofollow sponsored noopener" data-i18n="aff_nord_btn">🔒 Get 73% Off NordVPN</a>
+    <div class="aff-deal" data-i18n="aff_nord_deal">💰 30-day money-back guarantee</div>
     <div><span class="aff-tag">VPN</span><span class="aff-tag">Privacy</span><span class="aff-tag">Streaming</span></div>
   </div>
 
   <div class="aff-card">
-    <div class="aff-badge">⚡ POPULAR</div>
-    <div class="aff-title">Surfshark VPN</div>
-    <div class="aff-desc">Unlimited devices, one subscription. Fast servers in 100+ countries. Perfect for streaming & downloading.</div>
-    <a class="aff-btn" style="background:#1fcca1;color:#000" href="https://surfshark.com/deal?utm_source=AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener">🌊 Get 82% Off Surfshark</a>
-    <div class="aff-deal">💰 From $2.49/mo + 2 months free</div>
+    <div class="aff-badge" data-i18n="aff_popular">⚡ POPULAR</div>
+    <div class="aff-title" data-i18n="aff_surf_title">Surfshark VPN</div>
+    <div class="aff-desc" data-i18n="aff_surf_desc">Unlimited devices, one subscription. Fast servers in 100+ countries. Perfect for streaming & downloading.</div>
+    <a class="aff-btn" style="background:#1fcca1;color:#000" href="https://surfshark.com/deal?utm_source=AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener" data-i18n="aff_surf_btn">🌊 Get 82% Off Surfshark</a>
+    <div class="aff-deal" data-i18n="aff_surf_deal">💰 From $2.49/mo + 2 months free</div>
     <div><span class="aff-tag">VPN</span><span class="aff-tag">Unlimited Devices</span></div>
   </div>
 
   <div class="aff-card">
-    <div class="aff-badge">☁️ STORAGE</div>
-    <div class="aff-title">pCloud</div>
-    <div class="aff-desc">Save your downloaded videos forever. Lifetime cloud storage — pay once, use forever. Up to 10TB.</div>
-    <a class="aff-btn" style="background:#2196F3;color:#fff" href="https://partner.pcloud.com/r/AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener">☁️ Get Lifetime Storage</a>
-    <div class="aff-deal">💰 Up to 75% off lifetime plans</div>
+    <div class="aff-badge" data-i18n="aff_storage">☁️ STORAGE</div>
+    <div class="aff-title" data-i18n="aff_pcloud_title">pCloud</div>
+    <div class="aff-desc" data-i18n="aff_pcloud_desc">Save your downloaded videos forever. Lifetime cloud storage — pay once, use forever. Up to 10TB.</div>
+    <a class="aff-btn" style="background:#2196F3;color:#fff" href="https://partner.pcloud.com/r/AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener" data-i18n="aff_pcloud_btn">☁️ Get Lifetime Storage</a>
+    <div class="aff-deal" data-i18n="aff_pcloud_deal">💰 Up to 75% off lifetime plans</div>
     <div><span class="aff-tag">Cloud</span><span class="aff-tag">Lifetime</span><span class="aff-tag">10TB</span></div>
   </div>
 
   <div class="aff-card">
-    <div class="aff-badge">🎵 MUSIC</div>
-    <div class="aff-title">Epidemic Sound</div>
-    <div class="aff-desc">Royalty-free music & sound effects for your video projects. 40,000+ tracks, cleared for all platforms.</div>
-    <a class="aff-btn" style="background:#ff5722;color:#fff" href="https://www.epidemicsound.com/referral/AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener">🎵 Get 30 Days Free</a>
-    <div class="aff-deal">💰 Cancel anytime</div>
+    <div class="aff-badge" data-i18n="aff_music">🎵 MUSIC</div>
+    <div class="aff-title" data-i18n="aff_epidemic_title">Epidemic Sound</div>
+    <div class="aff-desc" data-i18n="aff_epidemic_desc">Royalty-free music & sound effects for your video projects. 40,000+ tracks, cleared for all platforms.</div>
+    <a class="aff-btn" style="background:#ff5722;color:#fff" href="https://www.epidemicsound.com/referral/AFFILIATE_ID" target="_blank" rel="nofollow sponsored noopener" data-i18n="aff_epidemic_btn">🎵 Get 30 Days Free</a>
+    <div class="aff-deal" data-i18n="aff_epidemic_deal">💰 Cancel anytime</div>
     <div><span class="aff-tag">Music</span><span class="aff-tag">Royalty-Free</span><span class="aff-tag">Creator</span></div>
   </div>
 
   <div style="text-align:center;font-size:10px;color:#444;margin-top:8px">
-    <p>Affiliate links help keep this tool free ❤️</p>
+    <p data-i18n="aff_footer">Affiliate links help keep this tool free ❤️</p>
   </div>
 </aside>
 </div><!-- /layout -->
 
 <footer style="margin-top:20px;font-size:11px;color:#444;text-align:center;width:100%">
-<p>Supports 1000+ video sites powered by yt-dlp · H.264 MP4 · QuickTime compatible</p>
-<p style="margin-top:4px">Temp files auto-delete after 1 hour</p>
+<p data-i18n="footer_line1">Supports 1000+ video sites powered by yt-dlp · H.264 MP4 · QuickTime compatible</p>
+<p style="margin-top:4px" data-i18n="footer_line2">Temp files auto-delete after 1 hour</p>
 </footer>
 
+<script src="/js/i18n.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>
